@@ -1,7 +1,4 @@
 class UnionFind {
-
-
-
   constructor(predicate) {
     this.size = 0;
     this.ids = [];

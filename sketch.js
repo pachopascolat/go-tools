@@ -8,6 +8,10 @@ let libertiesmatrix = Array(boardsize * boardsize).fill(0);
 let sequence = 0;
 let player = 1;
 
+const TAMANIO_JUEGO = 600;
+
+let tablero;
+const sp = 20;
 
 let ufs = {
   'black': new UnionFind(neighbors), 
@@ -16,9 +20,12 @@ let ufs = {
 
 
 function setup() {
-  createCanvas(600,600);
+  createCanvas(TAMANIO_JUEGO, TAMANIO_JUEGO);
 
   rectMode(CENTER);
+
+  tablero = new Tablero();
+   
 }
 
 function draw() {
@@ -46,30 +53,14 @@ function draw() {
   noStroke();
   
   // Draw the stones.
-  for(stone of stones){
-    fill(map(stone.player,-1,1,255,0));
-    ellipse(stone.x * sp, stone.y * sp, sp);
+  for(var i = 0; i< tablero.tamanio; i++ ){
+    for(var j = 0; j< tablero.tamanio; j++ ){
+      if(posicion[tablero.getIndice(i,j)]){
+        fill(posicion == 1 ? 0 : 255);
+        ellipse(i * sp, j * sp, sp);  
+      }
+    }
   }
-
-  // Draw liberties.
-  for(lib of liberties){
-    noFill();
-    stroke(0);
-    strokeWeight(3);
-    ellipse(lib.x * sp, lib.y * sp, sp / 2);
-  }
-
-  noStroke();
-
-  // Cursor stone
-  if(validMove(m.x,m.y)){
-    fill(map(player,-1,1,255,0));
-    ellipse(m.x * sp, m.y * sp, sp);
-  } else {
-    fill(127);
-    rect(m.x * sp, m.y * sp, sp/2, sp/2);
-  }
-  
 
 }
 
